@@ -3,7 +3,7 @@ import TimerForm from "./Components/TimerForm/TimerForm"
 import Auth from "./pages/auth/auth"
 import Login from "./pages/auth/login"
 import { Routes, Route } from "react-router-dom";
-
+import Category from "./Components/Category"
 
 function App() {
 
@@ -14,6 +14,7 @@ function App() {
     <Routes>
         <Route path="/auth" element={<Auth />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/category" element={<Category />} />
     </Routes>
     </>
   )
