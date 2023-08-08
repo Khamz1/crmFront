@@ -20,6 +20,41 @@ export const fetchEmployee = createAsyncThunk(
     }
 )
 
+export const addEmployeeToCategory = createAsyncThunk(
+    'addEmployee/fetch',
+    async({selectedEmployee, selectedCategory}, thunkAPI) => {
+        try {
+            const res = await fetch(`http://localhost:4000/patchEmployees/${selectedEmployee}`, {
+                method: 'PATCH',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ category: selectedCategory }),
+              })
+              const employee = await res.json()
+              return thunkAPI.fulfillWithValue(employee);
+        } catch (error) {
+            return thunkAPI.rejectWithValue(error.message);
+        }
+    }
+)
+//  fetch(`http://localhost:4000/patchEmployees/${selectedEmployee}`, {
+//       method: 'PATCH',
+//       headers: {
+//         'Content-Type': 'application/json',
+//       },
+//       body: JSON.stringify({ category }),
+//     })
+//       .then((response) => response.json())
+//       .then((data) => {
+//         console.log('Сотрудник добавлен в категорию:', data);
+//         // Вы можете добавить обработку успешного ответа здесь,
+//         // например, обновление списка сотрудников в выбранной категории.
+//       })
+//       .catch((error) => {
+//         console.error('Ошибка при добавлении сотрудника в категорию:', error);
+//       });
+
 
 const employeesSlice = createSlice({
     name: 'employees',
@@ -38,6 +73,20 @@ const employeesSlice = createSlice({
             state.error = null
         })
         .addCase(fetchEmployee.rejected, (state, action)=>{
+            state.loading = false,
+            state.error = action.payload
+        })
+        .addCase(addEmployeeToCategory.fulfilled, (state, action)=>{
+            
+            state.employees.map(item => item._id === action.payload),
+            state.loading = false,
+            state.error = null
+        })
+        .addCase(addEmployeeToCategory.pending, (state, action)=>{
+            state.loading = true,
+            state.error = null
+        })
+        .addCase(addEmployeeToCategory.rejected, (state, action)=>{
             state.loading = false,
             state.error = action.payload
         })
