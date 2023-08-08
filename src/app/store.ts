@@ -1,10 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit";
-import timerSlice from "../features/timerSlice";
-import timerReducer from  "../features/timerSlice";
+import totalDays from '../features/timerSlice';
 export const store = configureStore({
     reducer:{
-        timerSlice,
-        timer: timerReducer, 
+        totalDays
     }
 })
 

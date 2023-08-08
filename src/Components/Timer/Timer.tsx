@@ -1,99 +1,75 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { startTimer, stopTimer, resetTimer, updateTimer } from '../../features/timerSlice';
-import { useEffect, useState } from 'react';
+import React, { Component } from 'react';
 
-const Timer = () => {
-  const dispatch = useDispatch();
-  const { startTime, endTime, isRunning } = useSelector((state) => state.timer);
-  const [startDate, setStartDate] = useState('');
-  const [endDate, setEndDate] = useState('');
-  const [projectEndDate, setProjectEndDate] = useState(null);
-  let intervalId = null;
-
-  const handleStart = () => {
-    dispatch(startTimer());
-  };
-
-  const handleStop = () => {
-    dispatch(stopTimer());
-  };
-
-  const handleReset = () => {
-    dispatch(resetTimer());
-  };
-
-  const formatTime = (isoString) => {
-    const date = new Date(isoString);
-    const year = date.getFullYear();
-    const month = date.getMonth() + 1;
-    const day = date.getDate();
-    const hours = date.getHours();
-    const minutes = date.getMinutes();
-    const seconds = date.getSeconds();
-
-    return `${year}-${padNumber(month)}-${padNumber(day)} ${padNumber(hours)}:${padNumber(minutes)}:${padNumber(seconds)}`;
-  };
-
-  const padNumber = (number) => {
-    return number.toString().padStart(2, '0');
-  };
-
-  useEffect(() => {
-    if (isRunning) {
-      intervalId = setInterval(() => {
-        const currentTime = new Date();
-
-        if (projectEndDate && currentTime >= projectEndDate) {
-          alert('Срок проекта подошел к концу!');
-          setProjectEndDate(null);
-          clearInterval(intervalId);
-        }
-
-        dispatch(updateTimer());
-      }, 1000);
-    } else {
-      clearInterval(intervalId);
-    }
-
-    return () => {
-      clearInterval(intervalId);
+class CountdownTimer extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      days: '00',
+      hours: '00',
+      minutes: '00',
+      seconds: '00'
     };
-  }, [isRunning, projectEndDate]);
+  }
 
-  const handleStartDateChange = (e) => {
-    setStartDate(e.target.value);
+  componentDidMount() {
+    this.interval = setInterval(this.timeCount, 1000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.interval);
+  }
+
+  declOfNum = (number, titles) => {
+    let cases = [2, 0, 1, 1, 1, 2];
+    return titles[(number % 100 > 4 && number % 100 < 20) ? 2 : cases[(number % 10 < 5) ? number % 10 : 5]];
   };
 
-  const handleEndDateChange = (e) => {
-    const newEndDate = e.target.value;
-    setEndDate(newEndDate);
-    const newProjectEndDate = new Date(newEndDate);
-    setProjectEndDate(newProjectEndDate);
-    dispatch(updateTimer({ endTime: newProjectEndDate.toISOString() }));
+  timeCount = () => {
+    const targetDate = new Date('Dec 31 2023 23:59:59'); // Замените эту строку на вашу желаемую целевую дату
+    const now = new Date();
+    const leftUntil = targetDate - now;
+
+    const days = Math.floor(leftUntil / 1000 / 60 / 60 / 24);
+    const hours = Math.floor(leftUntil / 1000 / 60 / 60) % 24;
+    const minutes = Math.floor(leftUntil / 1000 / 60) % 60;
+    const seconds = Math.floor(leftUntil / 1000) % 60;
+
+    this.setState({
+      days: days.toString().padStart(2, '0'),
+      hours: hours.toString().padStart(2, '0'),
+      minutes: minutes.toString().padStart(2, '0'),
+      seconds: seconds.toString().padStart(2, '0')
+    });
   };
 
-  return (
-    <div>
-      <h1>Timer App</h1>
-      <div>
-        <label htmlFor="start-date">Start Date:</label>
-        <input type="datetime-local" id="start-date" value={startDate} onChange={handleStartDateChange} />
+  render() {
+    return (
+      <div className="time-count">
+        <h2 className="time-count__title">количество дней</h2>
+        <div className="time-count__content">
+          <div className="time-count__item time-count__days">
+            <div className="time-count__val">{this.state.days}</div>
+            <span className="time-count__text">{this.declOfNum(parseInt(this.state.days), ['день', 'дня', 'дней'])}</span>
+          </div>
+          <div className="time-count__separator">:</div>
+          <div className="time-count__item time-count__hours">
+            <div className="time-count__val">{this.state.hours}</div>
+            <span className="time-count__text">{this.declOfNum(parseInt(this.state.hours), ['час', 'часа', 'часов'])}</span>
+          </div>
+          <div className="time-count__separator">:</div>
+          <div className="time-count__item time-count__minutes">
+            <div className="time-count__val">{this.state.minutes}</div>
+            <span className="time-count__text">{this.declOfNum(parseInt(this.state.minutes), ['минута', 'минуты', 'минут'])}</span>
+          </div>
+          <div className="time-count__separator">:</div>
+          <div className="time-count__item time-count__seconds">
+            <div className="time-count__val">{this.state.seconds}</div>
+            <span className="time-count__text">{this.declOfNum(parseInt(this.state.seconds), ['секунда', 'секунды', 'секунд'])}</span>
+          </div>
+        </div>
       </div>
-      <div>
-        <label htmlFor="end-date">End Date:</label>
-        <input type="datetime-local" id="end-date" value={endDate} onChange={handleEndDateChange} />
-      </div>
-      {startTime && <p>Start time: {formatTime(startTime)}</p>}
-      {endTime && <p>End time: {formatTime(endTime)}</p>}
-      <button onClick={handleStart} disabled={isRunning}>
-        Start
-      </button>
-      <button onClick={handleStop} disabled={!isRunning}>
-        Stop
-      </button>
-      <button onClick={handleReset}>Reset</button>
-    </div>
-  );
-};
+    );
+  }
+}
 
-export default Timer;
+export default CountdownTimer;
