@@ -1,26 +1,27 @@
+
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCategory } from "../../features/categorySlice";
 import { fetchEmployee } from "../../features/employeeSlice";
+import { AppDispatch, RootState } from "../../app/store";
 
-const CategoryList = () => {
-  const dispatch = useDispatch();
+const CategoryList: React.FC = () => {
+  const dispatch: AppDispatch = useDispatch();
 
-  const category = useSelector((state) => state.category.category);
-  const employees = useSelector((state) => state.employees.employees);
- 
+  const category = useSelector((state: RootState) => state.category.category);
+  const employees = useSelector((state: RootState) => state.employees.employees);
 
   useEffect(() => {
     dispatch(fetchCategory());
     dispatch(fetchEmployee());
   }, [dispatch]);
 
-  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState<string>("");
 
-
-  const handleChange = (event) => {
+  const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedCategory(event.target.value);
   };
+console.log(category);
 
   return (
     <div>
@@ -39,7 +40,7 @@ const CategoryList = () => {
       <ul>
         {employees.map((item) => (
           item.category === selectedCategory && (
-          <li key={item._id}>{item.firstName}</li>
+            <li key={item._id}>{item.firstName}</li>
           )
         ))}
       </ul>

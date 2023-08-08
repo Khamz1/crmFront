@@ -14,7 +14,7 @@ export const store = configureStore({
     login,
 
     firm,
-    employee
+    employee,
 
     category,
     employees
