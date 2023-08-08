@@ -2,6 +2,10 @@
     display: flex;
     
 }
+
+.formClass{
+    width: 100%;
+}
 .createEmployeeAndFirm{
     width: 15%;
     padding: 20px;
