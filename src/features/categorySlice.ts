@@ -20,18 +20,24 @@ export const fetchCategory = createAsyncThunk(
     }
 )
 
-// export const fetchOneCategory = createAsyncThunk(
-//     'oneCategory/fetch',
-//     async(id, thunkAPI)=>{
-//         try {
-//             const res = await fetch(`http://localhost:5000/category/${id}`)
-//             const categoryOne = await res.json()
-//             return categoryOne
-//         } catch (error) {
-//             return error
-//         }
-//     }
-// )
+export const fetchAddCategory = createAsyncThunk(
+    'addCategory/fetch',
+    async(name, thunkAPI) => {
+        try {
+            const res = await fetch('http://localhost:4000/categories', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ name }),
+              })
+              const category = await res.json();
+              return thunkAPI.fulfillWithValue(category);
+        } catch (error) {
+            return thunkAPI.rejectWithValue(error.message);
+        }
+    }
+)
 
 const categorySlice = createSlice({
     name: 'category',
@@ -50,6 +56,20 @@ const categorySlice = createSlice({
             state.error = null
         })
         .addCase(fetchCategory.rejected, (state, action)=>{
+            state.loading = false,
+            state.error = action.payload
+        })
+        .addCase(fetchAddCategory.fulfilled, (state, action)=>{
+            // console.log(action.payload);
+            state.category.push(action.payload),
+            state.loading = false,
+            state.error = null
+        })
+        .addCase(fetchAddCategory.pending, (state, action)=>{
+            state.loading = true,
+            state.error = null
+        })
+        .addCase(fetchAddCategory.rejected, (state, action)=>{
             state.loading = false,
             state.error = action.payload
         })

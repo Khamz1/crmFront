@@ -7,7 +7,7 @@ import FirmCreate from "./Components/Firm/FirmCreate"
 import Auth from "./pages/auth/auth"
 import Login from "./pages/auth/login"
 import { Routes, Route } from "react-router-dom";
-import Category from "./Components/Category"
+import Category from "./Components/Category/Category"
 
 
 function App() {

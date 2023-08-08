@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchCategory } from "../../features/categorySlice";
 import { fetchEmployee } from "../../features/employeeSlice";
 
-const Category = () => {
+const CategoryList = () => {
   const dispatch = useDispatch();
 
   const category = useSelector((state) => state.category.category);
@@ -47,4 +47,4 @@ const Category = () => {
   );
 };
 
-export default Category;
+export default CategoryList;
