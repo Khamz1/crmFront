@@ -3,7 +3,7 @@ import TimerForm from "./Components/TimerForm/TimerForm"
 
 import FirmCreate from "./Components/Firm/FirmCreate"
 
-=======
+
 import Auth from "./pages/auth/auth"
 import Login from "./pages/auth/login"
 import { Routes, Route } from "react-router-dom";
