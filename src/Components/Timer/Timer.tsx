@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { useDispatch } from 'react-redux';
 
 class CountdownTimer extends Component {
   constructor(props) {
