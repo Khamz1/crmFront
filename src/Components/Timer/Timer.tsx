@@ -30,6 +30,7 @@ class CountdownTimer extends Component {
     const now = new Date();
     const leftUntil = targetDate - now;
 
+
     const days = Math.floor(leftUntil / 1000 / 60 / 60 / 24);
     const hours = Math.floor(leftUntil / 1000 / 60 / 60) % 24;
     const minutes = Math.floor(leftUntil / 1000 / 60) % 60;
