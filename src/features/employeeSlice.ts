@@ -1,113 +1,95 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 
-
 const initialState = {
-    employees: [],
-    error: null,
-    loading: false,
+    employees:[],
+    loading:false,
+    error:null
 }
 
-export const fetchEmployee = createAsyncThunk(
-    'employee/fetch',
-    async(data, thunkAPI)=>{
+export const fetchEmployees = createAsyncThunk(
+    'fetch/async',
+    async (_, thunkAPI)=>{
         try {
-            const res = await fetch('http://localhost:4000/getEmployees')
-            const employees = await res.json()
-            return employees
+            const res = await fetch ('http://localhost:4000/getEmployees')
+            const emps = await res.json();
+            if(emps.error){
+                return thunkAPI.rejectWithValue(emps.error)
+            }
+            return emps
         } catch (error) {
-            return error
+           return thunkAPI.rejectWithValue(error)
         }
+    },
+
+)
+
+export const postEmployees = createAsyncThunk(
+    'post/emps',
+    async ({email,firstName, secondName, image,role,login,password,token}, thunkAPI)=>{
+       try {
+        const formData = new FormData();
+        formData.append('email',email);
+        formData.append('firstName',firstName);
+        formData.append('secondName',secondName);
+        formData.append('role',role);
+        formData.append('login',login);
+        formData.append('password',password);
+        formData.append('token',token)
+
+        for(let item of image){
+            formData.append('image',item)
+        }
+        const res = await fetch('http://localhost:4000/addEmployees',{
+            method:"POST",
+            body:formData
+        })
+        const emps = await res.json();
+        if(emps.error){
+            return thunkAPI.rejectWithValue(emps.error)
+        }
+        return thunkAPI.fulfillWithValue(emps)        
+        
+       } catch (error) {
+        return thunkAPI.rejectWithValue(error)
+       }
     }
 )
-// export const addEmployeeToTeam = createAsyncThunk(
-//     'addEmployee/team',
-//     async({teamID, iduser}, thunkAPI) => {
-//         try {
-//             console.log(iduser);
-            
-//             const res = await fetch(`http://localhost:4000/patchEmployees/${iduser}`, {
-//                 method: 'PATCH',
-//                 headers: {
-//                   'Content-Type': 'application/json',
-//                 },
-//                 body: JSON.stringify({team: teamID }),
-//               })
-//               const employ = await res.json()
-//               return thunkAPI.fulfillWithValue(employ);
-//         } catch (error) {
-//             return thunkAPI.rejectWithValue(error.message);
-//         }
-//     }
-// )
 
-export const addEmployeeToCategory = createAsyncThunk(
-    'addEmployee/fetch',
-    async({selectedEmployee, selectedCategory}, thunkAPI) => {
-        try {
-            const res = await fetch(`http://localhost:4000/patchEmployees/${selectedEmployee}`, {
-                method: 'PATCH',
-                headers: {
-                  'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ category: selectedCategory }),
-              })
-              const employee = await res.json()
-              return thunkAPI.fulfillWithValue(employee);
-        } catch (error) {
-            return thunkAPI.rejectWithValue(error.message);
-        }
-    }
-)
-//  fetch(`http://localhost:4000/patchEmployees/${selectedEmployee}`, {
-//       method: 'PATCH',
-//       headers: {
-//         'Content-Type': 'application/json',
-//       },
-//       body: JSON.stringify({ category }),
-//     })
-//       .then((response) => response.json())
-//       .then((data) => {
-//         console.log('Сотрудник добавлен в категорию:', data);
-//         // Вы можете добавить обработку успешного ответа здесь,
-//         // например, обновление списка сотрудников в выбранной категории.
-//       })
-//       .catch((error) => {
-//         console.error('Ошибка при добавлении сотрудника в категорию:', error);
-//       });
-
-
-const employeesSlice = createSlice({
-    name: 'employees',
+export const employeeSlice = createSlice({
+    name:"employees",
     initialState,
-    reducers: {},
-    extraReducers: (builder)=>{
+    reducers:{},
+    extraReducers:(builder)=>{
         builder
-        .addCase(fetchEmployee.fulfilled, (state, action)=>{
-            // console.log(action.payload);
-            state.employees = action.payload,
+        .addCase(fetchEmployees.pending,(state, action)=>{
+            state.loading=true,
+            state.error=null
+        })
+        .addCase(fetchEmployees.rejected,(state,action)=>{
             state.loading = false,
             state.error = null
         })
-        .addCase(fetchEmployee.pending, (state, action)=>{
+        .addCase(
+            fetchEmployees.fulfilled,(state,action)=>{
+                state.loading = false,
+                state.error=false,
+                state.employees = action.payload
+            }
+        )
+        .addCase(postEmployees.pending,(state,action)=>{
             state.loading = true,
             state.error = null
         })
-        .addCase(fetchEmployee.rejected, (state, action)=>{
+        .addCase(postEmployees.rejected,(state,action)=>{
             state.loading = false,
-            state.error = action.payload
+            state.error=action.payload
         })
-        .addCase(addEmployeeToCategory.fulfilled, (state, action)=>{
-            
-            state.employees.map(item => item._id === action.payload),
+        .addCase(postEmployees.fulfilled,(state,action)=>{
             state.loading = false,
-            state.error = null
+            state.error=null,
+            state.employees.push(action.payload)
         })
-        .addCase(addEmployeeToCategory.pending, (state, action)=>{
-            state.loading = true,
-            state.error = null
-        })
-  
     }
 })
 
-export default employeesSlice.reducer
+export default employeeSlice.reducer

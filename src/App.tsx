@@ -1,19 +1,21 @@
+
 import Timer from "./Components/Timer/Timer"
-import TimerForm from "./Components/TimerForm/TimerForm"
+
+
 import Team from "./pages/team/team"
-import FirmCreate from "./Components/Firm/FirmCreate"
 import Auth from "./pages/auth/auth"
 import Login from "./pages/auth/login"
 import { Routes, Route } from "react-router-dom";
 import Category from "./Components/Category/Category"
+import Project from "./Components/CreateProject/Project";
 
 
 function App() {
-
   return (
     <>
-    <TimerForm/>
     <Timer/>
+    <Project/>
+
     <Routes>
         <Route path="/auth" element={<Auth />} />
         <Route path="/login" element={<Login />} />
@@ -25,4 +27,4 @@ function App() {
   )
 }
 
-export default App
+export default App;
