@@ -19,6 +19,26 @@ export const fetchEmployee = createAsyncThunk(
         }
     }
 )
+// export const addEmployeeToTeam = createAsyncThunk(
+//     'addEmployee/team',
+//     async({teamID, iduser}, thunkAPI) => {
+//         try {
+//             console.log(iduser);
+            
+//             const res = await fetch(`http://localhost:4000/patchEmployees/${iduser}`, {
+//                 method: 'PATCH',
+//                 headers: {
+//                   'Content-Type': 'application/json',
+//                 },
+//                 body: JSON.stringify({team: teamID }),
+//               })
+//               const employ = await res.json()
+//               return thunkAPI.fulfillWithValue(employ);
+//         } catch (error) {
+//             return thunkAPI.rejectWithValue(error.message);
+//         }
+//     }
+// )
 
 export const addEmployeeToCategory = createAsyncThunk(
     'addEmployee/fetch',
@@ -86,11 +106,7 @@ const employeesSlice = createSlice({
             state.loading = true,
             state.error = null
         })
-        .addCase(addEmployeeToCategory.rejected, (state, action)=>{
-            state.loading = false,
-            state.error = action.payload
-        })
-       
+  
     }
 })
 

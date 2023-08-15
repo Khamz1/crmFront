@@ -1,6 +1,7 @@
 import {configureStore} from '@reduxjs/toolkit'
 import auth from '../features/authSlice/authSlice'
 import login from '../features/authSlice/loginSlice'
+import team from '../features/team/teamSlice'
 
 import firm from '../features/firmSlice/firmSlice'
 import employee from '../features/employee/employee.slice'
@@ -12,9 +13,10 @@ export const store = configureStore({
     reducer:{
     auth,
     login,
+    team,
 
     firm,
-    employee
+    employee,
 
     category,
     employees
