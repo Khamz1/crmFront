@@ -3,8 +3,8 @@ import { useEffect, useState } from "react";
 import { RootState } from "../../app/store";
 import styles from "./team.module.scss";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchEmployee } from "../../features/employeeSlice";
 import { addTeam } from "../../features/team/teamSlice";
+import { fetchEmployees } from "../../features/employee/employee.slice";
 
 function Team() {
   const employees = useSelector(
@@ -19,7 +19,7 @@ function Team() {
 
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(fetchEmployee());
+    dispatch(fetchEmployees());
   }, [dispatch]);
 
   const [employee, setEmployee] = useState<any>([]);
