@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { useDispatch } from 'react-redux';
-
+import styles from './styles.module.scss'
 class CountdownTimer extends Component {
   constructor(props) {
     super(props);
@@ -46,30 +46,9 @@ class CountdownTimer extends Component {
 
   render() {
     return (
-      <div className="time-count">
-        <h2 className="time-count__title">количество дней</h2>
-        <div className="time-count__content">
-          <div className="time-count__item time-count__days">
-            <div className="time-count__val">{this.state.days}</div>
-            <span className="time-count__text">{this.declOfNum(parseInt(this.state.days), ['день', 'дня', 'дней'])}</span>
-          </div>
-          <div className="time-count__separator">:</div>
-          <div className="time-count__item time-count__hours">
-            <div className="time-count__val">{this.state.hours}</div>
-            <span className="time-count__text">{this.declOfNum(parseInt(this.state.hours), ['час', 'часа', 'часов'])}</span>
-          </div>
-          <div className="time-count__separator">:</div>
-          <div className="time-count__item time-count__minutes">
-            <div className="time-count__val">{this.state.minutes}</div>
-            <span className="time-count__text">{this.declOfNum(parseInt(this.state.minutes), ['минута', 'минуты', 'минут'])}</span>
-          </div>
-          <div className="time-count__separator">:</div>
-          <div className="time-count__item time-count__seconds">
-            <div className="time-count__val">{this.state.seconds}</div>
-            <span className="time-count__text">{this.declOfNum(parseInt(this.state.seconds), ['секунда', 'секунды', 'секунд'])}</span>
-          </div>
-        </div>
-      </div>
+    <>
+   
+    </>
     );
   }
 }
