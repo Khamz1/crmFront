@@ -9,7 +9,6 @@ const Project = () => {
 
   const handleStartDateChange = (event) => {
     const newStartDate = new Date(event.target.value);
-    console.log(newStartDate);
     
     setStartDate(newStartDate);
     calculateTotalDays(newStartDate, endDate);
@@ -17,7 +16,7 @@ const Project = () => {
 
   const handleEndDateChange = (event) => {
     const newEndDate = new Date(event.target.value);
-    console.log(newEndDate);
+ 
     
     setEndDate(newEndDate);
     calculateTotalDays(startDate, newEndDate);
@@ -29,11 +28,15 @@ const Project = () => {
       const daysDifference = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
       setTotalDays(daysDifference);
     }
+    
   };
+  
 
   const dispatch = useDispatch()
 
   const handleSendTime = () => {
+console.log(startDate);
+    
     dispatch(postProject({startTime: startDate, endTime:endDate}))
   }
 

@@ -17,18 +17,24 @@ export const fetchProject = createAsyncThunk(
   }
 );
 
-export const postProject = createAsyncThunk("post", async (data, thunkAPI) => {
+export const postProject = createAsyncThunk("post", async ({ name, startTime, endTime }, thunkAPI) => {
+  
+  const token = thunkAPI.getState().auth.token;
+  console.log(name, startTime, endTime);
+  
   try {
     const res = await fetch("http://localhost:4000/project/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization:`Bearer ${token}`
       },
-      body: JSON.stringify({ totalDays: data }),
+      body: JSON.stringify({ name, startTime, endTime }),
     });
-    console.log("start");
     const project = await res.json();
-    return thunkAPI.fulfillWithValue(data);
+    console.log("postProject response:", project); // Вывод данных
+
+    return thunkAPI.fulfillWithValue(project);
   } catch (error) {
     return thunkAPI.rejectWithValue(error.message);
   }
@@ -44,6 +50,8 @@ const projectSlice = createSlice({
         state.totalDays = action.payload
     })
     .addCase(postProject.fulfilled,(state,action) => {
+      console.log(action.payload);
+      
         state.totalDays.push(action.payload)
     })
   }
