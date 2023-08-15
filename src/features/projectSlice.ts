@@ -17,10 +17,10 @@ export const fetchProject = createAsyncThunk(
   }
 );
 
-export const postProject = createAsyncThunk("post", async ({ name, startTime, endTime }, thunkAPI) => {
+export const postProject = createAsyncThunk("post", async ({projectManager, idCustomer, emailCustomer, addressCustomer, typeCompany,  name, startTime, endTime }, thunkAPI) => {
   
   const token = thunkAPI.getState().auth.token;
-  console.log(name, startTime, endTime);
+  console.log(projectManager);
   
   try {
     const res = await fetch("http://localhost:4000/project/", {
@@ -29,7 +29,7 @@ export const postProject = createAsyncThunk("post", async ({ name, startTime, en
         "Content-Type": "application/json",
         Authorization:`Bearer ${token}`
       },
-      body: JSON.stringify({ name, startTime, endTime }),
+      body: JSON.stringify({projectManager, idCustomer, emailCustomer, addressCustomer, typeCompany,  name, startTime, endTime }),
     });
     const project = await res.json();
     console.log("postProject response:", project); // Вывод данных
