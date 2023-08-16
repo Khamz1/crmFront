@@ -1,0 +1,25 @@
+.container {
+display: flex;
+justify-content: center;
+  .form {
+
+    input {
+      display: block;
+      margin-bottom: 15px;
+      padding: 10px;
+      background: none;
+      border: 1px solid black;
+      border-radius: 5px;
+      text-align: center;
+      width: 90vh;
+      height: 25px;
+    }
+  }
+  .date {
+   
+    .span {
+        font-size: 20px;
+        text-align: center;
+    }
+  }
+}
