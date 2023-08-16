@@ -7,9 +7,8 @@ import { addTeam } from "../../features/team/teamSlice";
 import { fetchEmployees } from "../../features/employee/employee.slice";
 
 function Team() {
-  const employees = useSelector(
-    (state: RootState) => state.employees.employees
-  );
+  const employees = useSelector((state: RootState) => state.employee.employees);
+  console.log(employees);
 
   //   const teamss = useSelector(
   //     (state: RootState) => state.team.team.map((item) => item._id)
@@ -86,7 +85,6 @@ function Team() {
       <div className={styles.employee_li}>
         {employee.map((item: any) => {
           return (
-            
             <ul>
               <li>
                 <span>Имя: </span> {item.firstName}
@@ -103,9 +101,10 @@ function Team() {
         })}
       </div>
       <div className={styles.btn}>
-      <button className={styles.btn_team} onClick={handleSaveTeam}>Создать команду</button>
+        <button className={styles.btn_team} onClick={handleSaveTeam}>
+          Создать команду
+        </button>
       </div>
-      
     </div>
   );
 }

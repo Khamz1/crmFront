@@ -47,7 +47,7 @@ const projectSlice = createSlice({
   extraReducers:(builder) => {
     builder
     .addCase(fetchProject.fulfilled, (state,action) => {
-        state.totalDays = action.payload
+        state.projects = action.payload
     })
     .addCase(postProject.fulfilled,(state,action) => {
       console.log(action.payload);

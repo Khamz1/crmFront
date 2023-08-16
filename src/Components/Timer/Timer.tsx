@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { useDispatch } from 'react-redux';
-import styles from './styles.module.scss'
-class CountdownTimer extends Component {
+
+class Timer extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -20,16 +19,23 @@ class CountdownTimer extends Component {
     clearInterval(this.interval);
   }
 
-  declOfNum = (number, titles) => {
-    let cases = [2, 0, 1, 1, 1, 2];
-    return titles[(number % 100 > 4 && number % 100 < 20) ? 2 : cases[(number % 10 < 5) ? number % 10 : 5]];
-  };
-
   timeCount = () => {
-    const targetDate = new Date('Dec 31 2023 23:59:59'); // Замените эту строку на вашу желаемую целевую дату
+    const { initialTime } = this.props;
     const now = new Date();
-    const leftUntil = targetDate - now;
+    const targetTime = now.getTime() + initialTime * 1000;
 
+    const leftUntil = targetTime - now.getTime();
+
+    if (leftUntil <= 0) {
+      clearInterval(this.interval);
+      this.setState({
+        days: '00',
+        hours: '00',
+        minutes: '00',
+        seconds: '00'
+      });
+      return;
+    }
 
     const days = Math.floor(leftUntil / 1000 / 60 / 60 / 24);
     const hours = Math.floor(leftUntil / 1000 / 60 / 60) % 24;
@@ -46,11 +52,26 @@ class CountdownTimer extends Component {
 
   render() {
     return (
-    <>
-   
-    </>
+      <div>
+        <div>
+          <span>{this.state.days}</span>
+          <span>Days</span>
+        </div>
+        <div>
+          <span>{this.state.hours}</span>
+          <span>Hours</span>
+        </div>
+        <div>
+          <span>{this.state.minutes}</span>
+          <span>Minutes</span>
+        </div>
+        <div>
+          <span>{this.state.seconds}</span>
+          <span>Seconds</span>
+        </div>
+      </div>
     );
   }
 }
 
-export default CountdownTimer;
+export default Timer;

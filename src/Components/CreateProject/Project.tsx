@@ -16,7 +16,6 @@ const Project = () => {
   const [company, setCompany] = useState('')
   const [projectManager, setProjectManager] = useState('')
 
-  console.log(projectManager);
   
 
   const dispatch = useDispatch();
@@ -25,7 +24,6 @@ const Project = () => {
     dispatch(fetchEmployees());
   }, [dispatch]);
 
-  console.log(employees);
 
   const handleStartDateChange = (event) => {
     const newStartDate = new Date(event.target.value);
