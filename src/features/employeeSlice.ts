@@ -17,9 +17,11 @@ export const fetchEmployee = createAsyncThunk<Employee[]>(
     'employee/fetch',
     async (data, thunkAPI) => {
         try {
+
             const res = await fetch('http://localhost:4000/getEmployees');
             const employees = await res.json();
             return employees;
+
         } catch (error) {
             throw error;
         }
