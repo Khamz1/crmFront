@@ -1,0 +1,17 @@
+.cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+    .mr {
+        margin-right: 15px;
+    }
+.card {
+    width: 400px;
+    border: 1px solid black;
+    margin: 20px;
+}
+    .manager {
+        display: flex;
+    }
+}
