@@ -7,12 +7,15 @@ import { Routes, Route } from "react-router-dom";
 import EmpCreate from "./Components/Firm/EmpCreate";
 import Category from "./Components/Category/Category";
 import Project from "./Components/CreateProject/Project";
+import Projects from "./pages/Projects/Projects";
+
 import FirmCreate from "./Components/Firm/FirmCreate";
+
 
 function App() {
   return (
     <>
-      <Timer />
+
       <Routes>
         <Route path="/" element={<Project />} />
         <Route path="/firm" element={<FirmCreate />} />
@@ -21,6 +24,8 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/category" element={<Category />} />
         <Route path="/team" element={<Team />} />
+           <Route path="/projects" element={<Projects/>}/>
+        <Route path="/project" element={<Project/>}/>
       </Routes>
     </>
   );
