@@ -15,10 +15,8 @@ export const store = configureStore({
     auth,
     login,
     team,
-
     firm,
     employee,
-
     category,
     employees
 

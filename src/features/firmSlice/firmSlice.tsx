@@ -3,7 +3,9 @@ import { createAsyncThunk , createSlice} from "@reduxjs/toolkit"
 const initialState = {
     firms:[],
     loading:false,
-    error:null
+    error:null,
+    login:'',
+    password:''
 }
 
 export const fetchFirms = createAsyncThunk(
@@ -16,7 +18,7 @@ export const fetchFirms = createAsyncThunk(
                 return thunkAPI.rejectWithValue(firms.error)
             }
 
-            return firms
+            return thunkAPI.fulfillWithValue(firms)
             
         } catch (error) {
             return thunkAPI.rejectWithValue(error)
@@ -50,7 +52,15 @@ export const firmSlice=createSlice(
     {
         name:"firm",
         initialState,
-        reducers:{},
+        reducers:{
+            setLogin(state, action){
+                state.login=action.payload
+                
+            },
+            setPassword(state, action){
+                state.password=action.payload
+            }
+        },
         extraReducers:(builder)=>{
             builder
             .addCase(fetchFirms.pending, (state, action)=>{
@@ -82,5 +92,5 @@ export const firmSlice=createSlice(
         }
     }
 )
-
+export const {setLogin, setPassword}=firmSlice.actions
 export default firmSlice.reducer;
