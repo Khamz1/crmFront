@@ -7,6 +7,7 @@ import { Routes, Route } from "react-router-dom";
 import EmpCreate from "./Components/Firm/EmpCreate";
 import Category from "./Components/Category/Category";
 import Project from "./Components/CreateProject/Project";
+import Projects from "./pages/Projects/Projects"
 
 
 import FirmCreate from "./Components/Firm/FirmCreate";
