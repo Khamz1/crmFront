@@ -13,7 +13,7 @@ export const fetchEmployee = createAsyncThunk(
         try {
             const res = await fetch('http://localhost:4000/getEmployees')
             const employees = await res.json()
-            return employees
+            return thunkAPI.fulfillWithValue(employees)
         } catch (error) {
             return error
         }

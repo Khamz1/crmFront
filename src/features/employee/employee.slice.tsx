@@ -25,7 +25,7 @@ export const fetchEmployees = createAsyncThunk(
 
 export const postEmployees = createAsyncThunk(
     'post/emps',
-    async ({email,firstName, secondName, image,role,login,password,token}, thunkAPI)=>{
+    async ({email,firstName, secondName, image,role,login,password,firm}, thunkAPI)=>{
        try {
         const formData = new FormData();
         formData.append('email',email);
@@ -34,7 +34,8 @@ export const postEmployees = createAsyncThunk(
         formData.append('role',role);
         formData.append('login',login);
         formData.append('password',password);
-        formData.append('token',token)
+        formData.append('firm',firm)
+        
 
         for(let item of image){
             formData.append('image',item)

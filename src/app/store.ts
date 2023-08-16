@@ -12,10 +12,8 @@ export const store = configureStore({
     reducer:{
     auth,
     login,
-
     firm,
-    employee
-
+    employee,
     category,
     employees
 
