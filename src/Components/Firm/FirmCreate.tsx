@@ -23,6 +23,8 @@ function FirmCreate() {
     e.preventDefault();
 
     dispatch(postFirm(firmName));
+   console.log(firmName+"SASSA");
+   
   };
 
   useEffect(() => {

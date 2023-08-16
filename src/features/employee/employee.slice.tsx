@@ -45,6 +45,8 @@ export const postEmployees = createAsyncThunk(
             body:formData
         })
         const emps = await res.json();
+        console.log(emps+"EMPS");
+        
         if(emps.error){
             return thunkAPI.rejectWithValue(emps.error)
         }

@@ -18,7 +18,7 @@ function EmpCreate() {
 
   const firm = useSelector((state) => state.firm.firms);
   const firmName = firm.map((item) => {
-    return item._id + 1;
+    return item._id;
   });
 
   const generatePassword = (e) => {
@@ -85,7 +85,7 @@ function EmpCreate() {
         role,
         login,
         password,
-        firm: firmName,
+        firm:firmName,
       })
     );
   };

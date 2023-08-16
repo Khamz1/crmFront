@@ -32,16 +32,23 @@ export const postFirm = createAsyncThunk(
     async(firm, thunkAPI)=>{
         try {
             const res = await fetch('http://localhost:4000/postFirms',{
-                method:"POST",
+                method:"POST",  
                 headers:{"Content-Type": "application/json"},
                 body: JSON.stringify({name:firm})
                  
             })
+
             const firms = await res.json()
-            console.log(firms+'FIRMS');
+            console.log(firms);
+            
+            
+            
+            
             
 
             return thunkAPI.fulfillWithValue(firms)
+            
+            
         } catch (error) {
          return   thunkAPI.rejectWithValue(error)
         }

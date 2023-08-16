@@ -9,13 +9,15 @@ import { Routes, Route } from "react-router-dom";
 import EmpCreate from "./Components/Firm/EmpCreate"
 import Category from "./Components/Category/Category"
 import Project from "./Components/CreateProject/Project";
+import FirmCreate from "./Components/Firm/FirmCreate";
+
 
 
 
 function App() {
   return (
     <>
-    <TimerForm/>
+    {/* <TimerForm/> */}
     <Timer/>
     <Project/>
 
